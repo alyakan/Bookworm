@@ -13,6 +13,12 @@ class User < ActiveRecord::Base
 	after_create :message => "Thanks for using Bookworm!"
 
 
+	validate :that_date_of_birth_is_not_in_the_future
+	def that_date_of_birth_is_not_in_the_future 
+		self.errors.add :date_of_birth, 'is in the future' \
+			unless self.date_of_birth <= Date.today 
+	end
+
 	# Function Responsible for authenticating users
 	# Author: Aly Yakan
 	def self.authenticate(email, password)
