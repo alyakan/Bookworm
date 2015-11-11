@@ -10,5 +10,10 @@ class UsersController < ApplicationController
   		redirect_to root_url
   	else
   		render :action => "new"
+    end
+  end
+
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
   end
 end

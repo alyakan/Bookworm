@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 	include BCrypt
-
+  	attr_accessor :password
 	before_save :encrypt_password
 
 	validates_confirmation_of :password , :message => "Passwords do not match."
@@ -9,8 +9,11 @@ class User < ActiveRecord::Base
 	validates_uniqueness_of :email, :message => "Sorry this Email is already registered."
 	validates_presence_of :first_name, :message => "First Name Field cannot be blank"
 	validates_presence_of :last_name, :message => "Last Name Field cannot be blank"
+	
 
 	after_create :message => "Thanks for using Bookworm!"
+
+	has_one :rating
 
 
 	validate :that_date_of_birth_is_not_in_the_future
