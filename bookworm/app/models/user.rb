@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 	validates_confirmation_of :password , :message => "Passwords do not match."
 	validates_presence_of :password, :message => "Please Enter a Password"
 	validates_presence_of :email, :message=>"Email cannot be blank"
+	validates :email, email_format: { message: "Doesn't look like an email address" }
 	validates_uniqueness_of :email, :message => "Sorry this Email is already registered."
 	validates_presence_of :first_name, :message => "First Name Field cannot be blank"
 	validates_presence_of :last_name, :message => "Last Name Field cannot be blank"
@@ -19,8 +20,10 @@ class User < ActiveRecord::Base
 
 	after_create :message => "Thanks for using Bookworm!"
 
-	has_many :ratings
+
+	has_many :ratings, dependent: :destroy
 	has_many :reviews, dependent: :destroy
+
 
 
 	validate :that_date_of_birth_is_not_in_the_future
