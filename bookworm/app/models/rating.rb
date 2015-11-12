@@ -1,6 +1,9 @@
 class Rating < ActiveRecord::Base
 	after_create :add_new_rating
 	before_update :remove_old_rating
+	after_update :compute_rating_after_update
+	before_destroy :remove_old_rating
+	after_destroy :compute_rating_after_update
 
 	belongs_to :user
 	belongs_to :book_page
@@ -29,15 +32,35 @@ class Rating < ActiveRecord::Base
 		book.save
 	end
 
-	def update_old_rating
+	def remove_old_rating
 		book = BookPage.find(self.book_page_id)
 		@old_avg_rating = book.avg_rating
 		@number_of_users = Rating.where("book_page_id == ?", self.book_page_id).count
 		@old_rating = Rating.where("book_page_id == ? AND user_id == ?", self.book_page_id, self.user_id)
 		@old_total = @old_avg_rating * @number_of_users
 		@new_total = @old_total - self.rating
-		@new_avg_rating = @new_total / (@number_of_users-1)
-		book.avg_rating = @new_avg_rating
+		if @number_of_users - 1 == 0
+			book.avg_rating = nil
+		else
+			@new_avg_rating = @new_total / (@number_of_users-1)
+			book.avg_rating = @new_avg_rating
+		end
+		book.save
+	end
+
+	def compute_rating_after_update
+		book = BookPage.find(self.book_page_id)
+		@ratings = Rating.where("book_page_id == ?", self.book_page_id)
+		if @ratings.count == 0
+			book.avg_rating = nil
+			return
+		end
+		@total = 0
+		@ratings.each do |r|
+			@total += r.rating
+		end
+		@avg_rating = @total / @ratings.count
+		book.avg_rating = @avg_rating
 		book.save
 	end
 end
