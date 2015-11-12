@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
 
 	after_create :message => "Thanks for using Bookworm!"
 
-	has_one :rating
+	has_many :ratings
+	has_many :reviews, dependent: :destroy
 
 
 	validate :that_date_of_birth_is_not_in_the_future
