@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 	validates_confirmation_of :password , :message => "Passwords do not match."
 	validates_presence_of :password, :message => "Please Enter a Password"
 	validates_presence_of :email, :message=>"Email cannot be blank"
+	validates :email, email_format: { message: "Doesn't look like an email address" }
 	validates_uniqueness_of :email, :message => "Sorry this Email is already registered."
 	validates_presence_of :first_name, :message => "First Name Field cannot be blank"
 	validates_presence_of :last_name, :message => "Last Name Field cannot be blank"
