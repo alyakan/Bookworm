@@ -10,6 +10,11 @@ class User < ActiveRecord::Base
 	validates_presence_of :first_name, :message => "First Name Field cannot be blank"
 	validates_presence_of :last_name, :message => "Last Name Field cannot be blank"
 	
+	attr_accessible :avatar
+  	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" },
+  	:default_url => "/images/:style/missing.png"
+	validates_attachment :avatar,
+	:content_type => { :content_type => ["image/jpeg", "image/gif", "image/png"] }
 
 	after_create :message => "Thanks for using Bookworm!"
 
