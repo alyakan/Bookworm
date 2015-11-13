@@ -56,4 +56,7 @@ class User < ActiveRecord::Base
 	    end
 	end
 
+	def followees
+		Follow.where(receiver_id: self.id, accept: 1)
+	end
 end
