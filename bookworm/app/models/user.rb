@@ -23,10 +23,11 @@ class User < ActiveRecord::Base
 
 	has_many :ratings, dependent: :destroy
 	has_many :reviews, dependent: :destroy
+	has_many :review_comments, dependent: :destroy
 
 
 
-	#validate :that_date_of_birth_is_not_in_the_future
+	validate :that_date_of_birth_is_not_in_the_future
 	def that_date_of_birth_is_not_in_the_future 
 		self.errors.add :date_of_birth, 'is in the future' \
 			unless self.date_of_birth <= Date.today 

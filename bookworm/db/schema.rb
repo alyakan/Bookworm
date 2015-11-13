@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151112104421) do
+ActiveRecord::Schema.define(version: 20151113122313) do
 
   create_table "book_pages", force: :cascade do |t|
     t.string   "title"
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20151112104421) do
 
   add_index "ratings", ["book_page_id"], name: "index_ratings_on_book_page_id"
   add_index "ratings", ["user_id"], name: "index_ratings_on_user_id"
+
+  create_table "review_comments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "review_id"
+    t.string   "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "reviews", force: :cascade do |t|
     t.string   "review"
