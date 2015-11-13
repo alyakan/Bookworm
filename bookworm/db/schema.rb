@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151112104421) do
+ActiveRecord::Schema.define(version: 20151113131802) do
 
   create_table "book_pages", force: :cascade do |t|
     t.string   "title"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 20151112104421) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "receiver_id"
+    t.integer  "accept",      default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -46,6 +54,14 @@ ActiveRecord::Schema.define(version: 20151112104421) do
     t.datetime "updated_at",   null: false
     t.integer  "user_id"
     t.integer  "book_page_id"
+  end
+
+    create_table "review_comments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "review_id"
+    t.string   "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "reviews", ["book_page_id"], name: "index_reviews_on_book_page_id"

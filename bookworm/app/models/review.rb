@@ -6,6 +6,9 @@ class Review < ActiveRecord::Base
 	validates_presence_of :user_id,:message=>"Review must have a user"
 	validates_presence_of :book_page_id, :message=> "Review must be for a Book"
 
+	has_many :review_comments, dependent: :destroy
+
+
 	scope :book_reviews, ->(book_page_id) {
   	where(:book_page_id => book_page_id) }
 end
