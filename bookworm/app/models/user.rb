@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 	validates_presence_of :last_name, :message => "Last Name Field cannot be blank"
 	
 
+	attr_accessor :avatar
   	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" },
   	:default_url => "/images/:style/missing.png"
 	validates_attachment :avatar,
