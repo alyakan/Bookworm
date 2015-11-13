@@ -30,11 +30,11 @@ ActiveRecord::Schema.define(version: 20151113131802) do
   end
 
   create_table "follows", force: :cascade do |t|
-    t.integer  "user1_id"
-    t.integer  "user2_id"
-    t.integer  "accept",     default: 0
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "sender_id"
+    t.integer  "receiver_id"
+    t.integer  "accept",      default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "ratings", force: :cascade do |t|

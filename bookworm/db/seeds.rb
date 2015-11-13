@@ -22,4 +22,4 @@ rc = ReviewComment.create(id: 1, user:u_2, review:r, comment:"Couldn't agree mor
 
 rc_2 = ReviewComment.create(id: 2, user:u, review:r, comment:"Good we're on the same page")
 
-
+request_1 = Follow.create(id: 1, sender:u, receiver:u_2)

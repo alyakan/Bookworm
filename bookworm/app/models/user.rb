@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
 	has_many :ratings, dependent: :destroy
 	has_many :reviews, dependent: :destroy
 	has_many :review_comments, dependent: :destroy
+	has_many :follows, dependent: :destroy
+
 
 
 
