@@ -23,4 +23,7 @@ class BookPage < ActiveRecord::Base
 	scope :highest_rating_by_genre, ->(genre) { where(:genre => genre).order("avg_rating DESC").limit(5) }
 	scope :highest_rating, -> { order("avg_rating DESC").limit(5) }
 
+	def reviews
+		Review.where(book_page_id: self.id)
+	end
 end
