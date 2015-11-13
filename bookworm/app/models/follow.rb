@@ -7,5 +7,19 @@ class Follow < ActiveRecord::Base
 
     scope :friend_requests, ->(receiver_id) {
   	where(:receiver_id => receiver_id).order("created_at DESC").limit(10) }
-  	
+
+	validate :accept
+		def validate_accept
+			self.errors.add :accept, 'invalid status'\
+			unless self.accept==0 || self.accept==1 || self.accept==2
+		end
+
+  	after_update :reject_request
+
+
+  	def reject_request
+  		if self.accept == 2
+  			self.destroy
+  		end
+	end
 end
