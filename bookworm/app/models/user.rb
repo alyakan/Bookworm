@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 	include BCrypt
   	attr_accessor :password
+  	
 	before_save :encrypt_password
 
 	validates_confirmation_of :password , :message => "Passwords do not match."
@@ -11,7 +12,6 @@ class User < ActiveRecord::Base
 	validates_presence_of :first_name, :message => "First Name Field cannot be blank"
 	validates_presence_of :last_name, :message => "Last Name Field cannot be blank"
 	
-	attr_accessible :avatar
   	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" },
   	:default_url => "/images/:style/missing.png"
 	validates_attachment :avatar,
@@ -23,6 +23,9 @@ class User < ActiveRecord::Base
 
 	has_many :ratings, dependent: :destroy
 	has_many :reviews, dependent: :destroy
+	has_many :review_comments, dependent: :destroy
+	has_many :follows, dependent: :destroy
+
 
 
 
