@@ -48,20 +48,20 @@ ActiveRecord::Schema.define(version: 20151113131802) do
   add_index "ratings", ["book_page_id"], name: "index_ratings_on_book_page_id"
   add_index "ratings", ["user_id"], name: "index_ratings_on_user_id"
 
-  create_table "review_comments", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "review_id"
-    t.string   "comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "reviews", force: :cascade do |t|
     t.string   "review"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "user_id"
     t.integer  "book_page_id"
+  end
+
+    create_table "review_comments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "review_id"
+    t.string   "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "reviews", ["book_page_id"], name: "index_reviews_on_book_page_id"
