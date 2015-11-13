@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 	validates_presence_of :first_name, :message => "First Name Field cannot be blank"
 	validates_presence_of :last_name, :message => "Last Name Field cannot be blank"
 	
-	attr_accessible :avatar
+	attr_accessor :avatar
   	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" },
   	:default_url => "/images/:style/missing.png"
 	validates_attachment :avatar,
@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 	validate :that_date_of_birth_is_not_in_the_future
 	def that_date_of_birth_is_not_in_the_future 
 		self.errors.add :date_of_birth, 'is in the future' \
-			unless self.date_of_birth <= Date.today 
+		unless self.date_of_birth <= Date.today  || self.date_of_birth==nil
 	end
 
 	# Function Responsible for authenticating users
