@@ -13,7 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20151112104421) do
 
-
   create_table "book_pages", force: :cascade do |t|
     t.string   "title"
     t.string   "author"
@@ -36,6 +35,10 @@ ActiveRecord::Schema.define(version: 20151112104421) do
     t.datetime "updated_at",   null: false
     t.integer  "user_id"
     t.integer  "book_page_id"
+  end
+
+  add_index "ratings", ["book_page_id"], name: "index_ratings_on_book_page_id"
+  add_index "ratings", ["user_id"], name: "index_ratings_on_user_id"
 
   create_table "reviews", force: :cascade do |t|
     t.string   "review"
@@ -45,12 +48,14 @@ ActiveRecord::Schema.define(version: 20151112104421) do
     t.integer  "book_page_id"
   end
 
-  add_index "ratings", ["book_page_id"], name: "index_ratings_on_book_page_id"
-  add_index "ratings", ["user_id"], name: "index_ratings_on_user_id"
-
   add_index "reviews", ["book_page_id"], name: "index_reviews_on_book_page_id"
   add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
 
+  create_table "user_read_books", force: :cascade do |t|
+    t.integer  "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
