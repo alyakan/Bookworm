@@ -8,6 +8,10 @@ class Rating < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :book_page
 
+	validates_presence_of :book_page_id, :message=> "Rating must be for a Book"
+	validates_presence_of :user_id, :message=> "Rating must belong to a User"
+	validates_presence_of :rating, :message=> "A Rating must be present"
+
 	validates :user, uniqueness: { scope: :book_page }
 
 	validate :rating_between_0_and_5
